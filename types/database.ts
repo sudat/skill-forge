@@ -12,6 +12,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      app_settings: {
+        Row: {
+          key: string
+          value: string
+          updated_at: string
+        }
+        Insert: {
+          key: string
+          value: string
+          updated_at?: string
+        }
+        Update: {
+          key?: string
+          value?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       goal_conversations: {
         Row: {
           created_at: string
@@ -82,6 +100,7 @@ export type Database = {
           coverage_score: number
           created_at: string
           depth: number
+          detailed_knowledge_text: string | null
           goal_id: string
           id: string
           knowledge_text: string | null
@@ -95,6 +114,7 @@ export type Database = {
           coverage_score?: number
           created_at?: string
           depth?: number
+          detailed_knowledge_text?: string | null
           goal_id: string
           id?: string
           knowledge_text?: string | null
@@ -108,6 +128,7 @@ export type Database = {
           coverage_score?: number
           created_at?: string
           depth?: number
+          detailed_knowledge_text?: string | null
           goal_id?: string
           id?: string
           knowledge_text?: string | null

@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { TreeContainer } from "@/components/skill-tree/tree-container";
 
 export default async function TreePage() {
   const supabase = await createClient();
@@ -7,6 +8,7 @@ export default async function TreePage() {
     .from("goals")
     .select("*")
     .eq("status", "active")
+    .order("created_at", { ascending: false })
     .limit(1);
 
   const activeGoal = goals?.[0];
@@ -37,26 +39,26 @@ export default async function TreePage() {
     .order("sort_order");
 
   return (
-    <div className="flex h-screen">
-      {/* Tree panel */}
-      <div className="w-[380px] border-r border-white/[0.06] overflow-y-auto p-5">
-        <h3 className="text-[15px] text-gray-200 mb-4">スキルツリー</h3>
-        {nodes && nodes.length > 0 ? (
-          <p className="text-sm text-gray-500">
-            {nodes.length}個のノードが登録されています
-          </p>
-        ) : (
-          <p className="text-sm text-gray-500">
-            ゴール設定AIとの対話でスキルツリーが生成されます
-          </p>
-        )}
+    <div className="flex flex-col h-screen">
+      {/* Header */}
+      <div className="px-6 py-4 border-b border-white/[0.06] shrink-0">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-[15px] text-gray-200">{activeGoal.title}</h1>
+            <p className="text-[11px] text-gray-500 mt-0.5">スキルツリー</p>
+          </div>
+          <a
+            href={`/goal/${activeGoal.id}?tab=chat`}
+            className="text-xs text-purple-400 hover:text-purple-300 transition-colors"
+          >
+            対話に戻る →
+          </a>
+        </div>
       </div>
 
-      {/* Detail panel */}
-      <div className="flex-1 flex items-center justify-center">
-        <p className="text-sm text-gray-500">
-          スキルノードを選択してください
-        </p>
+      {/* Tree */}
+      <div className="flex-1 overflow-hidden">
+        <TreeContainer nodes={nodes ?? []} />
       </div>
     </div>
   );

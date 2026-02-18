@@ -46,10 +46,35 @@ export const STATUS_CONFIG: Record<SkillNodeStatus, StatusConfig> = {
   },
 };
 
+export type TasteFormality = "formal" | "normal" | "friendly";
+export type TasteLength = "short" | "normal" | "detailed";
+export type TasteDepth = "intro" | "standard" | "deep";
+
+export type TasteSettings = {
+  formality: TasteFormality;
+  length: TasteLength;
+  depth: TasteDepth;
+};
+
+export const DEFAULT_TASTE_SETTINGS: TasteSettings = {
+  formality: "normal",
+  length: "normal",
+  depth: "standard",
+};
+
+export const TASTE_LABELS = {
+  formality: { formal: "フォーマル", normal: "普通", friendly: "フレンドリー" },
+  length:    { short: "短め",        normal: "普通", detailed: "詳細" },
+  depth:     { intro: "入門",        standard: "標準", deep: "深掘り" },
+} as const;
+
+export const TASTE_STORAGE_KEY = "skill-forge:taste-settings";
+
 export const NAV_ITEMS = [
   { id: "dashboard", href: "/", label: "ダッシュボード", icon: "📊" },
   { id: "goal", href: "/goal", label: "ゴール設定", icon: "🎯" },
   { id: "tree", href: "/tree", label: "スキルツリー", icon: "🌳" },
   { id: "videos", href: "/videos", label: "動画ライブラリ", icon: "📹" },
   { id: "gap", href: "/gap", label: "ギャップ分析", icon: "🔍" },
+  { id: "settings", href: "/settings", label: "設定", icon: "⚙️" },
 ] as const;

@@ -18,12 +18,12 @@ export function TreeView({ nodes, selectedNodeId, onSelectNode }: TreeViewProps)
     return (
       <div className="p-5 text-center">
         <div className="text-3xl mb-3">🌱</div>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-[var(--text-secondary)]">
           ゴール設定AIとの対話でスキルツリーが生成されます
         </p>
         <a
           href="/goal"
-          className="inline-block mt-3 text-xs text-purple-400 underline hover:text-purple-300"
+          className="inline-block mt-3 text-xs text-[var(--accent-primary)] underline hover:opacity-80"
         >
           ゴール設定へ →
         </a>
@@ -64,8 +64,8 @@ function TreeNodeRow({ node, selectedNodeId, onSelectNode }: TreeNodeRowProps) {
       <div
         className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all group ${
           isSelected
-            ? "bg-white/[0.08] border border-white/[0.12]"
-            : "hover:bg-white/[0.04]"
+            ? "bg-[var(--bg-tertiary)] border border-[var(--border-default)]"
+            : "hover:bg-[var(--bg-tertiary)]/50"
         }`}
         style={{ paddingLeft: `${node.depth * 16 + 12}px` }}
         onClick={() => onSelectNode(node)}
@@ -73,7 +73,8 @@ function TreeNodeRow({ node, selectedNodeId, onSelectNode }: TreeNodeRowProps) {
         {/* 展開トグル */}
         {hasChildren ? (
           <button
-            className="w-4 h-4 flex items-center justify-center text-gray-600 hover:text-gray-400 shrink-0"
+            type="button"
+            className="w-4 h-4 flex items-center justify-center text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] shrink-0"
             onClick={(e) => {
               e.stopPropagation();
               setIsOpen((o) => !o);
@@ -96,7 +97,7 @@ function TreeNodeRow({ node, selectedNodeId, onSelectNode }: TreeNodeRowProps) {
         {/* ラベル */}
         <span
           className={`text-[13px] flex-1 min-w-0 truncate ${
-            isSelected ? "text-gray-100" : "text-gray-300 group-hover:text-gray-200"
+            isSelected ? "text-[var(--text-primary)]" : "text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]"
           }`}
         >
           {node.label}
@@ -104,7 +105,7 @@ function TreeNodeRow({ node, selectedNodeId, onSelectNode }: TreeNodeRowProps) {
 
         {/* カバレッジバー */}
         <div className="shrink-0 flex items-center gap-1.5 w-[72px]">
-          <div className="flex-1 h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+          <div className="flex-1 h-1.5 bg-[var(--border-subtle)] rounded-full overflow-hidden">
             <div
               className="h-full rounded-full transition-all"
               style={{
@@ -114,7 +115,7 @@ function TreeNodeRow({ node, selectedNodeId, onSelectNode }: TreeNodeRowProps) {
               }}
             />
           </div>
-          <span className="text-[10px] text-gray-600 w-7 text-right">
+          <span className="text-[10px] text-[var(--text-tertiary)] w-7 text-right">
             {coverage}%
           </span>
         </div>

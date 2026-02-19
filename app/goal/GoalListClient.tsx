@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { Goal } from "@/types/database";
 import { DeleteConfirmModal } from "@/components/goal/delete-confirm-modal";
+import { Button } from "@/components/ui/button";
 
 type GoalWithNodeCount = Goal & { nodeCount: number };
 
@@ -81,69 +82,77 @@ export function GoalListClient({ goals: initialGoals }: GoalListClientProps) {
   const archivedGoals = goals.filter((g) => g.status === "archived");
 
   return (
-    <div className="p-8 max-w-3xl mx-auto">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-2xl text-gray-100 mb-1">ゴール管理</h1>
-          <p className="text-sm text-gray-500">学習ゴールの一覧と切り替え</p>
-        </div>
-        <Link
-          href="/goal/new"
-          className="px-5 py-2.5 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm hover:opacity-90 transition-opacity"
-        >
-          + 新しいゴールを作成
-        </Link>
-      </div>
+    <div className="min-h-screen bg-[var(--bg-primary)] with-noise">
+      {/* Hero */}
+      <section className="pt-12 pb-8 px-8">
+        <span className="inline-block text-xs font-mono text-[var(--text-tertiary)] mb-3 tracking-wide">
+          [04] Goals
+        </span>
+        <h1 className="text-hero text-[var(--text-primary)] mb-4 tracking-tight">
+          ゴール管理
+        </h1>
+        <p className="text-base text-[var(--text-secondary)] opacity-80 leading-relaxed">
+          学習ゴールの一覧と切り替え
+        </p>
+      </section>
 
-      {goals.length === 0 && (
-        <div className="text-center py-20">
-          <div className="text-5xl mb-4">🎯</div>
-          <p className="text-gray-400 mb-6">まだゴールが登録されていません</p>
-          <Link
-            href="/goal/new"
-            className="inline-block px-6 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm"
-          >
-            最初のゴールを作成する
-          </Link>
-        </div>
-      )}
-
-      {activeGoals.length > 0 && (
-        <section className="mb-8">
-          <h2 className="text-xs text-gray-500 uppercase tracking-widest mb-3">
-            アクティブ
-          </h2>
-          <div className="space-y-3">
-            {activeGoals.map((goal) => (
-              <GoalCard
-                key={goal.id}
-                goal={goal}
-                isLoading={loadingId === goal.id}
-                onToggle={toggleStatus}
-              />
-            ))}
+      {/* Content */}
+      <section className="px-8 pb-20">
+        <div className="max-w-3xl mx-auto">
+          <div className="flex justify-end mb-8">
+            <Button>
+              <Link href="/goal/new">+ 新しいゴールを作成</Link>
+            </Button>
           </div>
-        </section>
-      )}
 
-      {archivedGoals.length > 0 && (
-        <section>
-          <h2 className="text-xs text-gray-500 uppercase tracking-widest mb-3">
-            アーカイブ
-          </h2>
-          <div className="space-y-3">
-            {archivedGoals.map((goal) => (
-              <GoalCard
-                key={goal.id}
-                goal={goal}
-                isLoading={loadingId === goal.id}
-                onToggle={toggleStatus}
-                onDelete={setDeleteTarget}
-              />
-            ))}
-          </div>
-        </section>
-      )}
+          {goals.length === 0 && (
+            <div className="text-center py-20">
+              <div className="text-5xl mb-4">🎯</div>
+              <p className="text-[var(--text-secondary)] mb-6">まだゴールが登録されていません</p>
+              <Button>
+                <Link href="/goal/new">最初のゴールを作成する</Link>
+              </Button>
+            </div>
+          )}
+
+          {activeGoals.length > 0 && (
+            <section className="mb-8">
+              <h2 className="text-xs text-[var(--text-tertiary)] uppercase tracking-widest mb-3">
+                アクティブ
+              </h2>
+              <div className="space-y-3">
+                {activeGoals.map((goal) => (
+                  <GoalCard
+                    key={goal.id}
+                    goal={goal}
+                    isLoading={loadingId === goal.id}
+                    onToggle={toggleStatus}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {archivedGoals.length > 0 && (
+            <section>
+              <h2 className="text-xs text-[var(--text-tertiary)] uppercase tracking-widest mb-3">
+                アーカイブ
+              </h2>
+              <div className="space-y-3">
+                {archivedGoals.map((goal) => (
+                  <GoalCard
+                    key={goal.id}
+                    goal={goal}
+                    isLoading={loadingId === goal.id}
+                    onToggle={toggleStatus}
+                    onDelete={setDeleteTarget}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+      </section>
 
       {/* 削除確認モーダル */}
       {deleteTarget && (
@@ -179,31 +188,31 @@ function GoalCard({
 
   return (
     <div
-      className={`flex items-center gap-4 p-4 rounded-xl border transition-colors ${
+      className={`flex items-center gap-4 p-4 rounded-xl border card-hover-lift ${
         isActive
-          ? "bg-purple-500/[0.06] border-purple-500/30"
-          : "bg-white/[0.02] border-white/[0.06] opacity-60 hover:opacity-80"
+          ? "bg-[var(--accent-primary)]/[0.06] border-[var(--accent-primary)]/30"
+          : "bg-[var(--bg-secondary)] border-[var(--border-subtle)] opacity-60 hover:opacity-80"
       }`}
     >
       {/* Status dot */}
       <div
         className={`w-2.5 h-2.5 rounded-full shrink-0 ${
-          isActive ? "bg-purple-400" : "bg-gray-600"
+          isActive ? "bg-[var(--accent-primary)]" : "bg-[var(--text-tertiary)]"
         }`}
       />
 
       {/* Main content */}
       <Link href={`/goal/${goal.id}`} className="flex-1 min-w-0">
-        <div className="text-[14px] text-gray-200 truncate">{goal.title}</div>
+        <div className="text-[14px] text-[var(--text-primary)] truncate">{goal.title}</div>
         <div className="flex items-center gap-3 mt-0.5">
-          <span className="text-[11px] text-gray-500">{createdAt}</span>
+          <span className="text-[11px] text-[var(--text-tertiary)]">{createdAt}</span>
           {goal.nodeCount > 0 && (
-            <span className="text-[11px] text-gray-500">
+            <span className="text-[11px] text-[var(--text-tertiary)]">
               {goal.nodeCount} ノード
             </span>
           )}
           {goal.nodeCount === 0 && (
-            <span className="text-[11px] text-gray-600">ツリー未生成</span>
+            <span className="text-[11px] text-[var(--text-tertiary)]">ツリー未生成</span>
           )}
         </div>
       </Link>
@@ -212,7 +221,7 @@ function GoalCard({
       <div className="flex items-center gap-2 shrink-0">
         <Link
           href={`/goal/${goal.id}?tab=chat`}
-          className="px-3 py-1.5 rounded-lg text-[12px] bg-white/[0.04] border border-white/[0.08] text-gray-400 hover:text-gray-200 transition-colors"
+          className="px-3 py-1.5 rounded-lg text-[12px] bg-[var(--bg-tertiary)] border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
         >
           チャット
         </Link>
@@ -220,10 +229,10 @@ function GoalCard({
           type="button"
           onClick={() => onToggle(goal)}
           disabled={isLoading}
-          className={`px-3 py-1.5 rounded-lg text-[12px] border transition-colors ${
+          className={`px-3 py-1.5 rounded-lg text-[12px] border transition-all duration-200 ${
             isActive
-              ? "bg-white/[0.04] border-white/[0.08] text-gray-400 hover:text-gray-200"
-              : "bg-purple-500/10 border-purple-500/30 text-purple-400 hover:bg-purple-500/20"
+              ? "bg-[var(--bg-tertiary)] border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+              : "bg-[var(--accent-primary)]/10 border-[var(--accent-primary)]/30 text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/20"
           } disabled:opacity-50 disabled:cursor-not-allowed`}
         >
           {isLoading ? "..." : isActive ? "アーカイブ" : "アクティブにする"}
@@ -233,7 +242,7 @@ function GoalCard({
             type="button"
             onClick={() => onDelete(goal)}
             disabled={isLoading}
-            className="px-3 py-1.5 rounded-lg text-[12px] bg-white/[0.04] border border-white/[0.08] text-gray-500 hover:text-red-400 hover:border-red-500/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-3 py-1.5 rounded-lg text-[12px] bg-[var(--bg-tertiary)] border border-[var(--border-subtle)] text-[var(--text-tertiary)] hover:text-red-400 hover:border-red-500/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             削除
           </button>

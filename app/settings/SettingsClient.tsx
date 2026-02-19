@@ -64,14 +64,15 @@ export function SettingsClient({ initial }: { initial: Settings }) {
   return (
     <div className="max-w-2xl space-y-8">
       {/* LLM プロバイダー選択 */}
-      <section className="bg-[#0f1118] border border-white/[0.06] rounded-xl p-6">
-        <h2 className="text-[13px] font-semibold text-gray-300 mb-4 tracking-wide uppercase">
+      <section className="bg-[var(--bg-secondary)] border border-[var(--border-subtle)] rounded-xl p-6">
+        <h2 className="text-[13px] font-semibold text-[var(--text-primary)] mb-4 tracking-wide uppercase">
           LLM プロバイダー
         </h2>
 
         <div className="flex gap-3">
           {(["zai", "openai"] as const).map((p) => (
             <button
+              type="button"
               key={p}
               onClick={() => setProvider(p)}
               className={`
@@ -79,18 +80,18 @@ export function SettingsClient({ initial }: { initial: Settings }) {
                 transition-all duration-200 text-left
                 ${
                   provider === p
-                    ? "border-purple-500/60 bg-purple-500/[0.12] text-purple-300"
-                    : "border-white/[0.08] bg-white/[0.02] text-gray-500 hover:border-white/[0.14] hover:text-gray-400"
+                    ? "border-[var(--accent-primary)]/60 bg-[var(--accent-primary)]/[0.12] text-[var(--accent-primary)]"
+                    : "border-[var(--border-subtle)] bg-[var(--bg-tertiary)]/50 text-[var(--text-secondary)] hover:border-[var(--border-default)] hover:text-[var(--text-primary)]"
                 }
               `}
             >
               <div className="flex items-center gap-2 mb-1">
                 <span
-                  className={`w-2 h-2 rounded-full ${provider === p ? "bg-purple-400" : "bg-gray-700"}`}
+                  className={`w-2 h-2 rounded-full ${provider === p ? "bg-[var(--accent-primary)]" : "bg-[var(--text-tertiary)]"}`}
                 />
                 {p === "zai" ? "Z.AI" : "OpenAI"}
               </div>
-              <div className="text-[11px] text-gray-600 mt-1 ml-4">
+              <div className="text-[11px] text-[var(--text-tertiary)] mt-1 ml-4">
                 {p === "zai" ? "GLM-4.7 / json_object + リトライ" : "GPT-4o / json_schema 保証"}
               </div>
             </button>
@@ -100,18 +101,18 @@ export function SettingsClient({ initial }: { initial: Settings }) {
 
       {/* Z.AI 設定（参照のみ） */}
       {provider === "zai" && (
-        <section className="bg-[#0f1118] border border-white/[0.06] rounded-xl p-6">
-          <h2 className="text-[13px] font-semibold text-gray-300 mb-4 tracking-wide uppercase">
+        <section className="bg-[var(--bg-secondary)] border border-[var(--border-subtle)] rounded-xl p-6">
+          <h2 className="text-[13px] font-semibold text-[var(--text-primary)] mb-4 tracking-wide uppercase">
             Z.AI 設定
           </h2>
-          <div className="flex items-center gap-3 p-3.5 bg-green-500/[0.06] border border-green-500/[0.14] rounded-lg">
-            <span className="text-green-400 text-base">✓</span>
+          <div className="flex items-center gap-3 p-3.5 bg-[var(--accent-tertiary)]/[0.08] border border-[var(--accent-tertiary)]/[0.2] rounded-lg">
+            <span className="text-[var(--accent-tertiary)] text-base">✓</span>
             <div>
-              <p className="text-[13px] text-gray-300">
-                API キーは <code className="text-green-400 text-[12px] bg-green-500/[0.1] px-1.5 py-0.5 rounded">ZAI_API_KEY</code> 環境変数で管理されています
+              <p className="text-[13px] text-[var(--text-secondary)]">
+                API キーは <code className="text-[var(--accent-tertiary)] text-[12px] bg-[var(--accent-tertiary)]/[0.15] px-1.5 py-0.5 rounded">ZAI_API_KEY</code> 環境変数で管理されています
               </p>
-              <p className="text-[11px] text-gray-500 mt-0.5">
-                変更する場合は <code className="text-gray-400">.env.local</code> を直接編集してください
+              <p className="text-[11px] text-[var(--text-tertiary)] mt-0.5">
+                変更する場合は <code className="text-[var(--text-secondary)]">.env.local</code> を直接編集してください
               </p>
             </div>
           </div>
@@ -120,22 +121,23 @@ export function SettingsClient({ initial }: { initial: Settings }) {
 
       {/* OpenAI 設定 */}
       {provider === "openai" && (
-        <section className="bg-[#0f1118] border border-white/[0.06] rounded-xl p-6 space-y-5">
-          <h2 className="text-[13px] font-semibold text-gray-300 mb-4 tracking-wide uppercase">
+        <section className="bg-[var(--bg-secondary)] border border-[var(--border-subtle)] rounded-xl p-6 space-y-5">
+          <h2 className="text-[13px] font-semibold text-[var(--text-primary)] mb-4 tracking-wide uppercase">
             OpenAI 設定
           </h2>
 
           {/* API キー */}
           <div>
-            <label className="block text-[12px] text-gray-400 mb-2">
+            <label htmlFor="openai-api-key" className="block text-[12px] text-[var(--text-secondary)] mb-2">
               API キー
               {initial.openai_api_key_masked && (
-                <span className="ml-2 text-[11px] text-green-500/80">
+                <span className="ml-2 text-[11px] text-[var(--accent-tertiary)]">
                   現在: {initial.openai_api_key_masked}
                 </span>
               )}
             </label>
             <input
+              id="openai-api-key"
               type="password"
               value={openaiKey}
               onChange={(e) => setOpenaiKey(e.target.value)}
@@ -145,9 +147,9 @@ export function SettingsClient({ initial }: { initial: Settings }) {
                   : "sk-..."
               }
               className="
-                w-full bg-white/[0.04] border border-white/[0.08] rounded-lg
-                px-4 py-2.5 text-[13px] text-gray-200 placeholder-gray-600
-                focus:outline-none focus:border-purple-500/50 focus:bg-white/[0.06]
+                w-full bg-[var(--bg-tertiary)] border border-[var(--border-subtle)] rounded-lg
+                px-4 py-2.5 text-[13px] text-[var(--text-primary)] placeholder-[var(--text-tertiary)]
+                focus:outline-none focus:border-[var(--accent-primary)]/50 focus:bg-[var(--bg-primary)]
                 transition-all duration-200
               "
             />
@@ -155,10 +157,11 @@ export function SettingsClient({ initial }: { initial: Settings }) {
 
           {/* モデル選択 */}
           <div>
-            <label className="block text-[12px] text-gray-400 mb-2">モデル</label>
-            <div className="flex gap-2">
+            <label htmlFor="openai-model" className="block text-[12px] text-[var(--text-secondary)] mb-2">モデル</label>
+            <div className="flex gap-2" id="openai-model">
               {OPENAI_MODELS.map((m) => (
                 <button
+                  type="button"
                   key={m.value}
                   onClick={() => setOpenaiModel(m.value)}
                   className={`
@@ -166,8 +169,8 @@ export function SettingsClient({ initial }: { initial: Settings }) {
                     transition-all duration-200
                     ${
                       openaiModel === m.value
-                        ? "border-blue-500/50 bg-blue-500/[0.1] text-blue-300"
-                        : "border-white/[0.08] bg-white/[0.02] text-gray-500 hover:border-white/[0.14]"
+                        ? "border-[var(--accent-secondary)]/50 bg-[var(--accent-secondary)]/[0.1] text-[var(--accent-secondary)]"
+                        : "border-[var(--border-subtle)] bg-[var(--bg-tertiary)]/50 text-[var(--text-secondary)] hover:border-[var(--border-default)]"
                     }
                   `}
                 >
@@ -178,10 +181,10 @@ export function SettingsClient({ initial }: { initial: Settings }) {
           </div>
 
           {/* Structured Outputs 説明 */}
-          <div className="flex items-start gap-2.5 p-3 bg-blue-500/[0.06] border border-blue-500/[0.12] rounded-lg">
-            <span className="text-blue-400 text-sm mt-0.5">ℹ</span>
-            <p className="text-[11px] text-gray-400 leading-relaxed">
-              OpenAI 使用時は <strong className="text-gray-300">json_schema</strong> モードで厳密なスキーマ保証が有効になります。
+          <div className="flex items-start gap-2.5 p-3 bg-[var(--accent-secondary)]/[0.06] border border-[var(--accent-secondary)]/[0.12] rounded-lg">
+            <span className="text-[var(--accent-secondary)] text-sm mt-0.5">ℹ</span>
+            <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">
+              OpenAI 使用時は <strong className="text-[var(--text-primary)]">json_schema</strong> モードで厳密なスキーマ保証が有効になります。
               リトライは不要で、常に正しい構造のレスポンスが返ります。
             </p>
           </div>
@@ -190,24 +193,25 @@ export function SettingsClient({ initial }: { initial: Settings }) {
 
       {/* エラー / 成功メッセージ */}
       {error && (
-        <p className="text-[12px] text-red-400 bg-red-500/[0.08] border border-red-500/[0.2] rounded-lg px-4 py-2.5">
+        <p className="text-[12px] text-red-500 bg-red-500/[0.08] border border-red-500/[0.2] rounded-lg px-4 py-2.5">
           {error}
         </p>
       )}
       {saved && (
-        <p className="text-[12px] text-green-400 bg-green-500/[0.08] border border-green-500/[0.2] rounded-lg px-4 py-2.5">
+        <p className="text-[12px] text-[var(--accent-tertiary)] bg-[var(--accent-tertiary)]/[0.08] border border-[var(--accent-tertiary)]/[0.2] rounded-lg px-4 py-2.5">
           設定を保存しました
         </p>
       )}
 
       {/* 保存ボタン */}
       <button
+        type="button"
         onClick={handleSave}
         disabled={saving}
         className="
           px-6 py-2.5 rounded-lg text-[13px] font-medium
-          bg-purple-500/[0.15] border border-purple-500/40 text-purple-300
-          hover:bg-purple-500/[0.25] hover:border-purple-500/60
+          bg-[var(--accent-primary)]/[0.15] border border-[var(--accent-primary)]/40 text-[var(--accent-primary)]
+          hover:bg-[var(--accent-primary)]/[0.25] hover:border-[var(--accent-primary)]/60
           disabled:opacity-50 disabled:cursor-not-allowed
           transition-all duration-200
         "

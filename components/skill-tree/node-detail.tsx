@@ -68,10 +68,10 @@ export function NodeDetail({ node, onStatusChange }: NodeDetailProps) {
 
   if (!node) {
     return (
-      <div className="flex items-center justify-center h-full text-gray-600">
+      <div className="flex items-center justify-center h-full text-[var(--text-tertiary)] bg-[var(--bg-primary)]">
         <div className="text-center">
           <div className="text-3xl mb-3">←</div>
-          <p className="text-sm">スキルノードを選択してください</p>
+          <p className="text-sm text-[var(--text-secondary)]">スキルノードを選択してください</p>
         </div>
       </div>
     );
@@ -104,7 +104,7 @@ export function NodeDetail({ node, onStatusChange }: NodeDetailProps) {
   };
 
   return (
-    <div className="p-6 overflow-y-auto h-full">
+    <div className="p-6 overflow-y-auto h-full bg-[var(--bg-primary)]">
       {/* ヘッダー */}
       <div className="flex items-start justify-between gap-4 mb-5">
         <div className="flex items-center gap-3 min-w-0">
@@ -114,7 +114,7 @@ export function NodeDetail({ node, onStatusChange }: NodeDetailProps) {
           >
             {config.icon}
           </span>
-          <h2 className="text-xl text-gray-100 leading-snug">{node.label}</h2>
+          <h2 className="text-xl text-[var(--text-primary)] leading-snug">{node.label}</h2>
         </div>
         <span
           className="shrink-0 text-xs px-2.5 py-1 rounded-md border"
@@ -131,12 +131,12 @@ export function NodeDetail({ node, onStatusChange }: NodeDetailProps) {
       {/* カバレッジスコア */}
       <div className="mb-5">
         <div className="flex items-center justify-between mb-1.5">
-          <span className="text-xs text-gray-500">カバレッジスコア</span>
+          <span className="text-xs text-[var(--text-tertiary)]">カバレッジスコア</span>
           <span className="text-sm font-mono" style={{ color: config.color }}>
             {node.coverage_score}%
           </span>
         </div>
-        <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
+        <div className="h-2 bg-[var(--border-subtle)] rounded-full overflow-hidden">
           <div
             className="h-full rounded-full transition-all"
             style={{
@@ -149,7 +149,7 @@ export function NodeDetail({ node, onStatusChange }: NodeDetailProps) {
 
       {/* ステータス変更 */}
       <div className="mb-6">
-        <p className="text-xs text-gray-500 mb-2">ステータスを変更</p>
+        <p className="text-xs text-[var(--text-tertiary)] mb-2">ステータスを変更</p>
         <div className="flex flex-wrap gap-1.5">
           {statusOptions.map((s) => {
             const sc = STATUS_CONFIG[s];
@@ -181,11 +181,11 @@ export function NodeDetail({ node, onStatusChange }: NodeDetailProps) {
       {/* knowledge_text */}
       {node.knowledge_text && (
         <div className="mb-4">
-          <h3 className="text-xs text-gray-500 mb-3 uppercase tracking-wider">
+          <h3 className="text-xs text-[var(--text-tertiary)] mb-3 uppercase tracking-wider">
             学習テキスト（概要）
           </h3>
-          <div className="bg-white/[0.03] rounded-xl border border-white/[0.06] p-4">
-            <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-wrap">
+          <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-subtle)] p-4">
+            <p className="text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap">
               {node.knowledge_text}
             </p>
           </div>
@@ -194,7 +194,7 @@ export function NodeDetail({ node, onStatusChange }: NodeDetailProps) {
 
       {/* 詳細学習テキスト */}
       <div className="mb-6">
-        <h3 className="text-xs text-gray-500 mb-3 uppercase tracking-wider">
+        <h3 className="text-xs text-[var(--text-tertiary)] mb-3 uppercase tracking-wider">
           詳細学習テキスト
         </h3>
         <div className="flex items-center gap-2">
@@ -203,11 +203,11 @@ export function NodeDetail({ node, onStatusChange }: NodeDetailProps) {
               type="button"
               onClick={handleGenerate}
               disabled={isGenerating}
-              className="text-[11px] px-3 py-1.5 rounded-lg border border-purple-500/30 text-purple-400 hover:bg-purple-500/10 transition-colors disabled:opacity-40 flex items-center gap-1.5"
+              className="text-[11px] px-3 py-1.5 rounded-lg border border-[var(--accent-primary)]/30 text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/10 transition-colors disabled:opacity-40 flex items-center gap-1.5"
             >
               {isGenerating ? (
                 <>
-                  <span className="inline-block w-3 h-3 border border-purple-400/40 border-t-purple-400 rounded-full animate-spin" />
+                  <span className="inline-block w-3 h-3 border border-[var(--accent-primary)]/40 border-t-[var(--accent-primary)] rounded-full animate-spin" />
                   生成中...
                 </>
               ) : (
@@ -218,24 +218,24 @@ export function NodeDetail({ node, onStatusChange }: NodeDetailProps) {
           {hasDetailedText && (
             <Link
               href={`/skill-nodes/${node.id}`}
-              className="text-[11px] px-3 py-1.5 rounded-lg border border-blue-500/30 text-blue-400 hover:bg-blue-500/10 transition-colors"
+              className="text-[11px] px-3 py-1.5 rounded-lg border border-[var(--accent-secondary)]/30 text-[var(--accent-secondary)] hover:bg-[var(--accent-secondary)]/10 transition-colors"
             >
               詳細テキストを見る →
             </Link>
           )}
         </div>
         {generateError && (
-          <p className="text-[11px] text-red-400 mt-2">{generateError}</p>
+          <p className="text-[11px] text-red-500 mt-2">{generateError}</p>
         )}
       </div>
 
       {/* マッピング済み動画 */}
       <div>
-        <h3 className="text-xs text-gray-500 mb-3 uppercase tracking-wider">
+        <h3 className="text-xs text-[var(--text-tertiary)] mb-3 uppercase tracking-wider">
           関連動画 ({mappedVideos.length}本)
         </h3>
         {mappedVideos.length === 0 ? (
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-[var(--text-secondary)]">
             まだ動画がマッピングされていません
           </p>
         ) : (
@@ -243,23 +243,23 @@ export function NodeDetail({ node, onStatusChange }: NodeDetailProps) {
             {mappedVideos.map((m) => (
               <div
                 key={m.id}
-                className="p-3 bg-white/[0.03] rounded-xl border border-white/[0.06]"
+                className="p-3 bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-subtle)]"
               >
                 <div className="flex items-start justify-between gap-3 mb-1.5">
-                  <span className="text-[13px] text-gray-200 leading-snug">
+                  <span className="text-[13px] text-[var(--text-primary)] leading-snug">
                     {m.video.title}
                   </span>
-                  <span className="shrink-0 text-[11px] text-blue-400 font-mono">
+                  <span className="shrink-0 text-[11px] text-[var(--accent-secondary)] font-mono">
                     {m.relevance_score}%
                   </span>
                 </div>
                 {m.coverage_detail && (
-                  <p className="text-xs text-gray-500 leading-relaxed">
+                  <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
                     {m.coverage_detail}
                   </p>
                 )}
                 {(m.timestamp_start || m.timestamp_end) && (
-                  <p className="text-[10px] text-gray-600 mt-1">
+                  <p className="text-[10px] text-[var(--text-tertiary)] mt-1">
                     {m.timestamp_start && `▶ ${m.timestamp_start}`}
                     {m.timestamp_start && m.timestamp_end && " 〜 "}
                     {m.timestamp_end && m.timestamp_end}

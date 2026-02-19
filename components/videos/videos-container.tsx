@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { VideoCard } from "./video-card";
 import { VideoRegisterModal } from "./video-register-modal";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import type { Video, VideoAnalysisStatus, KeyPoint } from "@/types/database";
 
 type VideoDetailModalProps = {
@@ -21,12 +23,12 @@ function VideoDetailModal({ video, onClose }: VideoDetailModalProps) {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="w-full max-w-xl bg-[#0c0e14] border border-white/[0.08] rounded-2xl shadow-2xl overflow-hidden max-h-[80vh] flex flex-col">
-        <div className="px-6 py-4 border-b border-white/[0.06] flex items-center justify-between shrink-0">
-          <h2 className="text-[15px] text-gray-200 truncate flex-1 mr-4">{video.title}</h2>
+      <div className="w-full max-w-xl bg-[var(--bg-primary)] border border-[var(--border-subtle)] rounded-2xl shadow-2xl overflow-hidden max-h-[80vh] flex flex-col">
+        <div className="px-6 py-4 border-b border-[var(--border-subtle)] flex items-center justify-between shrink-0">
+          <h2 className="text-[15px] text-[var(--text-primary)] truncate flex-1 mr-4">{video.title}</h2>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-300 rounded-lg hover:bg-white/[0.06] transition-all shrink-0"
+            className="w-8 h-8 flex items-center justify-center text-[var(--text-tertiary)] hover:text-[var(--text-primary)] rounded-lg hover:bg-[var(--bg-secondary)] transition-all shrink-0"
           >
             ✕
           </button>
@@ -34,7 +36,7 @@ function VideoDetailModal({ video, onClose }: VideoDetailModalProps) {
 
         <div className="overflow-y-auto p-6 space-y-5">
           {/* メタ情報 */}
-          <div className="flex gap-3 flex-wrap text-xs text-gray-500">
+          <div className="flex gap-3 flex-wrap text-xs text-[var(--text-tertiary)]">
             {video.channel_name && <span>📺 {video.channel_name}</span>}
             {video.duration && <span>⏱ {video.duration}</span>}
             {video.url && (
@@ -42,7 +44,7 @@ function VideoDetailModal({ video, onClose }: VideoDetailModalProps) {
                 href={video.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-400 hover:text-blue-300 underline"
+                className="text-[var(--accent-secondary)] hover:opacity-80 underline"
               >
                 動画を開く →
               </a>
@@ -52,9 +54,9 @@ function VideoDetailModal({ video, onClose }: VideoDetailModalProps) {
           {/* サマリー */}
           {video.summary && (
             <div>
-              <h3 className="text-xs text-gray-500 uppercase tracking-wider mb-2">サマリー</h3>
-              <div className="bg-white/[0.03] rounded-xl border border-white/[0.06] p-4">
-                <p className="text-sm text-gray-300 leading-relaxed">{video.summary}</p>
+              <h3 className="text-xs text-[var(--text-tertiary)] uppercase tracking-wider mb-2">サマリー</h3>
+              <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-subtle)] p-4">
+                <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{video.summary}</p>
               </div>
             </div>
           )}
@@ -62,21 +64,21 @@ function VideoDetailModal({ video, onClose }: VideoDetailModalProps) {
           {/* キーポイント */}
           {keyPoints.length > 0 && (
             <div>
-              <h3 className="text-xs text-gray-500 uppercase tracking-wider mb-2">
+              <h3 className="text-xs text-[var(--text-tertiary)] uppercase tracking-wider mb-2">
                 キーポイント ({keyPoints.length})
               </h3>
               <div className="space-y-2">
                 {keyPoints.map((kp, i) => (
                   <div
                     key={i}
-                    className="flex gap-3 p-3 bg-white/[0.02] rounded-lg border border-white/[0.04]"
+                    className="flex gap-3 p-3 bg-[var(--bg-tertiary)] rounded-lg border border-[var(--border-subtle)]"
                   >
-                    <span className="text-purple-400 shrink-0 text-sm">◆</span>
+                    <span className="text-[var(--accent-primary)] shrink-0 text-sm">◆</span>
                     <div>
-                      <div className="text-[13px] text-gray-200">{kp.topic}</div>
-                      <div className="text-xs text-gray-500 mt-0.5">{kp.description}</div>
+                      <div className="text-[13px] text-[var(--text-primary)]">{kp.topic}</div>
+                      <div className="text-xs text-[var(--text-tertiary)] mt-0.5">{kp.description}</div>
                       {kp.timestamp && (
-                        <div className="text-[10px] text-gray-600 mt-0.5">{kp.timestamp}</div>
+                        <div className="text-[10px] text-[var(--text-tertiary)] mt-0.5">{kp.timestamp}</div>
                       )}
                     </div>
                   </div>
@@ -87,7 +89,7 @@ function VideoDetailModal({ video, onClose }: VideoDetailModalProps) {
 
           {/* 解析状態メッセージ */}
           {video.analysis_status === "pending" && (
-            <p className="text-sm text-gray-500 text-center py-4">解析待機中...</p>
+            <p className="text-sm text-[var(--text-tertiary)] text-center py-4">解析待機中...</p>
           )}
           {video.analysis_status === "analyzing" && (
             <p className="text-sm text-yellow-400 text-center py-4">AI解析中...</p>
@@ -179,47 +181,53 @@ export function VideosContainer({ initialVideos }: VideosContainerProps) {
 
   return (
     <>
-      <div className="p-8">
-        <div className="flex justify-between items-center mb-6">
-          <div>
-            <h1 className="text-2xl text-gray-100 mb-1">動画ライブラリ</h1>
-            <p className="text-[13px] text-gray-500">登録済み: {videos.length}本</p>
-          </div>
-          <button
-            onClick={() => setShowRegisterModal(true)}
-            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 text-white text-[13px] hover:opacity-90 transition-opacity"
-          >
-            ＋ 動画を登録
-          </button>
-        </div>
+      <div className="min-h-screen bg-[var(--bg-primary)] with-noise">
+        {/* Hero */}
+        <section className="pt-12 pb-8 px-8">
+          <span className="inline-block text-xs font-mono text-[var(--text-tertiary)] mb-3 tracking-wide">
+            [06] Videos
+          </span>
+          <h1 className="text-hero text-[var(--text-primary)] mb-4 tracking-tight">
+            動画ライブラリ
+          </h1>
+          <p className="text-base text-[var(--text-secondary)] opacity-80 leading-relaxed">
+            登録済み: {videos.length}本
+          </p>
+        </section>
 
-        {videos.length > 0 ? (
-          <div className="space-y-2">
-            {videos.map((video) => (
-              <VideoCard
-                key={video.id}
-                video={video}
-                onClick={setSelectedVideo}
-                onRetry={handleRetry}
-                onDelete={handleDelete}
-              />
-            ))}
+        {/* Content */}
+        <section className="px-8 pb-20">
+          <div className="flex justify-end mb-6">
+            <Button onClick={() => setShowRegisterModal(true)}>
+              ＋ 動画を登録
+            </Button>
           </div>
-        ) : (
-          <div className="text-center py-16">
-            <div className="text-4xl mb-4">📹</div>
-            <p className="text-gray-400 mb-2">まだ動画が登録されていません</p>
-            <p className="text-sm text-gray-600 mb-6">
-              YouTube動画の文字起こしを登録して、スキルツリーにマッピングしましょう
-            </p>
-            <button
-              onClick={() => setShowRegisterModal(true)}
-              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm hover:opacity-90 transition-opacity"
-            >
-              ＋ 最初の動画を登録
-            </button>
-          </div>
-        )}
+
+          {videos.length > 0 ? (
+            <div className="space-y-2">
+              {videos.map((video) => (
+                <VideoCard
+                  key={video.id}
+                  video={video}
+                  onClick={setSelectedVideo}
+                  onRetry={handleRetry}
+                  onDelete={handleDelete}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <div className="text-4xl mb-4">📹</div>
+              <p className="text-[var(--text-secondary)] mb-2">まだ動画が登録されていません</p>
+              <p className="text-sm text-[var(--text-tertiary)] mb-6">
+                YouTube動画の文字起こしを登録して、スキルツリーにマッピングしましょう
+              </p>
+              <Button onClick={() => setShowRegisterModal(true)}>
+                ＋ 最初の動画を登録
+              </Button>
+            </div>
+          )}
+        </section>
       </div>
 
       {showRegisterModal && (

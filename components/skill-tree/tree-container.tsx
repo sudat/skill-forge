@@ -25,14 +25,14 @@ export function TreeContainer({ nodes: initialNodes }: TreeContainerProps) {
   );
 
   return (
-    <div className="flex h-full">
+    <div className="flex h-full bg-[var(--bg-primary)]">
       {/* ツリーパネル */}
-      <div className="w-[380px] shrink-0 border-r border-white/[0.06] overflow-y-auto py-3">
+      <div className="w-[380px] shrink-0 border-r border-[var(--border-subtle)] overflow-y-auto py-3">
         <div className="px-4 mb-3">
-          <h3 className="text-[13px] text-gray-400 font-medium">
+          <h3 className="text-[13px] text-[var(--text-secondary)] font-medium">
             スキルツリー
           </h3>
-          <p className="text-[11px] text-gray-600 mt-0.5">
+          <p className="text-[11px] text-[var(--text-tertiary)] mt-0.5">
             {nodes.length}個のノード
           </p>
         </div>

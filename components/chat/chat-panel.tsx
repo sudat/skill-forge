@@ -188,8 +188,7 @@ export function ChatPanel({ initialGoalId, initialHistory, onGoalCreated }: Chat
               content={msg.content}
               isStreaming={
                 isLoading &&
-                msg.role === "assistant" &&
-                msg.content === ""
+                msg.role === "assistant"
               }
             />
           );

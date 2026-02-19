@@ -24,15 +24,24 @@ export default async function SettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0c0e14] px-8 py-8">
-      <div className="mb-8">
-        <h1 className="text-xl font-bold text-gray-100 tracking-tight">設定</h1>
-        <p className="text-[13px] text-gray-500 mt-1">
+    <div className="min-h-screen bg-[var(--bg-primary)] with-noise">
+      {/* Hero */}
+      <section className="pt-12 pb-8 px-8">
+        <span className="inline-block text-xs font-mono text-[var(--text-tertiary)] mb-3 tracking-wide">
+          [05] Settings
+        </span>
+        <h1 className="text-hero text-[var(--text-primary)] mb-4 tracking-tight">
+          設定
+        </h1>
+        <p className="text-base text-[var(--text-secondary)] opacity-80 leading-relaxed">
           LLM プロバイダーと API キーを管理します
         </p>
-      </div>
+      </section>
 
-      <SettingsClient initial={initial} />
+      {/* Content */}
+      <section className="px-8 pb-20">
+        <SettingsClient initial={initial} />
+      </section>
     </div>
   );
 }

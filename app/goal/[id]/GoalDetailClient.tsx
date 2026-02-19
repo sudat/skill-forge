@@ -54,22 +54,22 @@ export function GoalDetailClient({
   const tree = buildTree(nodes);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen bg-[var(--bg-primary)]">
       {/* Header */}
-      <div className="px-6 py-4 border-b border-white/[0.06] shrink-0">
+      <div className="px-6 py-4 border-b border-[var(--border-subtle)] shrink-0">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link
               href="/goal"
-              className="text-gray-500 hover:text-gray-300 transition-colors text-sm"
+              className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors text-sm"
             >
               ← ゴール一覧
             </Link>
-            <div className="w-px h-4 bg-white/[0.08]" />
+            <div className="w-px h-4 bg-[var(--border-subtle)]" />
             <div>
               <div className="flex items-center gap-2">
                 <span
-                  className="text-[15px] text-gray-200 truncate max-w-[220px]"
+                  className="text-[15px] text-[var(--text-primary)] truncate max-w-[220px]"
                   title={goal.title}
                 >
                   {goal.title}
@@ -77,14 +77,14 @@ export function GoalDetailClient({
                 <span
                   className={`text-[10px] px-2 py-0.5 rounded-full border ${
                     isActive
-                      ? "text-purple-400 border-purple-500/30 bg-purple-500/10"
-                      : "text-gray-500 border-white/[0.08] bg-white/[0.03]"
+                      ? "text-[var(--accent-primary)] border-[var(--accent-primary)]/30 bg-[var(--accent-primary)]/10"
+                      : "text-[var(--text-tertiary)] border-[var(--border-subtle)] bg-[var(--bg-tertiary)]"
                   }`}
                 >
                   {isActive ? "アクティブ" : "アーカイブ"}
                 </span>
               </div>
-              <div className="text-[11px] text-gray-500 mt-0.5">
+              <div className="text-[11px] text-[var(--text-tertiary)] mt-0.5">
                 {nodes.length > 0
                   ? `${nodes.length} ノード`
                   : "ツリー未生成"}
@@ -94,14 +94,14 @@ export function GoalDetailClient({
 
           <div className="flex items-center gap-3">
             {/* Tabs */}
-            <div className="flex bg-white/[0.04] rounded-lg p-0.5 border border-white/[0.06]">
+            <div className="flex bg-[var(--bg-secondary)] rounded-lg p-0.5 border border-[var(--border-subtle)]">
               <button
                 type="button"
                 onClick={() => setTab("document")}
                 className={`px-4 py-1.5 rounded-md text-[12px] transition-colors ${
                   tab === "document"
-                    ? "bg-white/[0.08] text-gray-200"
-                    : "text-gray-500 hover:text-gray-300"
+                    ? "bg-[var(--bg-tertiary)] text-[var(--text-primary)]"
+                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                 }`}
               >
                 ドキュメント
@@ -111,8 +111,8 @@ export function GoalDetailClient({
                 onClick={() => setTab("chat")}
                 className={`px-4 py-1.5 rounded-md text-[12px] transition-colors ${
                   tab === "chat"
-                    ? "bg-white/[0.08] text-gray-200"
-                    : "text-gray-500 hover:text-gray-300"
+                    ? "bg-[var(--bg-tertiary)] text-[var(--text-primary)]"
+                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                 }`}
               >
                 チャット
@@ -125,8 +125,8 @@ export function GoalDetailClient({
               disabled={statusLoading}
               className={`px-4 py-1.5 rounded-lg text-[12px] border transition-colors disabled:opacity-50 ${
                 isActive
-                  ? "bg-white/[0.04] border-white/[0.08] text-gray-400 hover:text-gray-200"
-                  : "bg-purple-500/10 border-purple-500/30 text-purple-400 hover:bg-purple-500/20"
+                  ? "bg-[var(--bg-secondary)] border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                  : "bg-[var(--accent-primary)]/10 border-[var(--accent-primary)]/30 text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/20"
               }`}
             >
               {statusLoading ? "..." : isActive ? "アーカイブ" : "アクティブにする"}
@@ -252,11 +252,11 @@ function DocumentView({
 
   if (nodes.length === 0) {
     return (
-      <div className="flex items-center justify-center h-full">
+      <div className="flex items-center justify-center h-full bg-[var(--bg-primary)]">
         <div className="text-center">
           <div className="text-4xl mb-4">📄</div>
-          <p className="text-gray-400 mb-2">スキルツリーがまだ生成されていません</p>
-          <p className="text-sm text-gray-600">
+          <p className="text-[var(--text-secondary)] mb-2">スキルツリーがまだ生成されていません</p>
+          <p className="text-sm text-[var(--text-tertiary)]">
             チャットタブでAIと対話してツリーを生成してください
           </p>
         </div>
@@ -274,16 +274,16 @@ function DocumentView({
   const bulkRunning = bulkStatus === "running";
 
   return (
-    <div className="h-full overflow-y-auto">
+    <div className="h-full overflow-y-auto bg-[var(--bg-primary)]">
       <div className="max-w-3xl mx-auto px-8 py-8">
         {/* Document header */}
-        <div className="mb-8 pb-6 border-b border-white/[0.06]">
-          <h1 className="text-2xl text-gray-100 mb-2">{goal.title}</h1>
+        <div className="mb-8 pb-6 border-b border-[var(--border-subtle)]">
+          <h1 className="text-2xl text-[var(--text-primary)] mb-2">{goal.title}</h1>
           {goal.description && (
-            <p className="text-gray-400 text-sm mb-3">{goal.description}</p>
+            <p className="text-[var(--text-secondary)] text-sm mb-3">{goal.description}</p>
           )}
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4 text-[11px] text-gray-500">
+            <div className="flex items-center gap-4 text-[11px] text-[var(--text-tertiary)]">
               <span>作成日: {createdAt}</span>
               <span>{nodes.length} スキルノード</span>
             </div>
@@ -293,7 +293,7 @@ function DocumentView({
               <button
                 type="button"
                 onClick={() => setIsTasteDialogOpen(true)}
-                className="w-7 h-7 flex items-center justify-center rounded-lg border border-white/[0.08] text-gray-500 hover:text-gray-300 hover:border-white/[0.14] transition-colors text-sm"
+                className="w-7 h-7 flex items-center justify-center rounded-lg border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-default)] transition-colors text-sm"
                 title="生成テイスト設定"
               >
                 ⚙
@@ -302,25 +302,25 @@ function DocumentView({
                 <button
                   type="button"
                   onClick={handleBulkGenerate}
-                  className="text-[11px] px-3 py-1.5 rounded-lg border border-purple-500/30 text-purple-400 hover:bg-purple-500/10 transition-colors flex items-center gap-1.5"
+                  className="text-[11px] px-3 py-1.5 rounded-lg border border-[var(--accent-primary)]/30 text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/10 transition-colors flex items-center gap-1.5"
                 >
                   全ノード一括生成（{pendingCount}件）
                 </button>
               )}
               {bulkStatus === "running" && (
-                <div className="flex items-center gap-2 text-[11px] text-gray-400">
-                  <span className="inline-block w-3 h-3 border border-purple-400/40 border-t-purple-400 rounded-full animate-spin shrink-0" />
+                <div className="flex items-center gap-2 text-[11px] text-[var(--text-secondary)]">
+                  <span className="inline-block w-3 h-3 border border-[var(--accent-primary)]/40 border-t-[var(--accent-primary)] rounded-full animate-spin shrink-0" />
                   <span>
                     生成中... {bulkProgress.completed}/{bulkProgress.total} 完了
                     （Lv{bulkProgress.currentDepth + 1}処理中）
                   </span>
                   {bulkProgress.failed > 0 && (
-                    <span className="text-red-400">{bulkProgress.failed}件失敗</span>
+                    <span className="text-red-500">{bulkProgress.failed}件失敗</span>
                   )}
                 </div>
               )}
               {bulkStatus === "done" && (
-                <span className="text-[11px] text-emerald-400">
+                <span className="text-[11px] text-[var(--accent-tertiary)]">
                   {bulkProgress.failed === 0
                     ? `全${bulkProgress.total}ノード生成完了 ✓`
                     : `生成完了 ✓（${bulkProgress.failed}件失敗）`}
@@ -377,7 +377,7 @@ function TreeDocNodeActions({
       {hasDetailedText && (
         <Link
           href={`/skill-nodes/${nodeId}`}
-          className="text-[10px] px-2.5 py-1 rounded-md border border-blue-500/30 text-blue-400 hover:bg-blue-500/10 transition-colors"
+          className="text-[10px] px-2.5 py-1 rounded-md border border-[var(--accent-secondary)]/30 text-[var(--accent-secondary)] hover:bg-[var(--accent-secondary)]/10 transition-colors"
         >
           詳細テキストを見る →
         </Link>
@@ -415,10 +415,10 @@ function TreeDocNode({
         <h3
           className={`font-medium ${
             depth === 0
-              ? "text-[16px] text-gray-100"
+              ? "text-[16px] text-[var(--text-primary)]"
               : depth === 1
-                ? "text-[14px] text-gray-200"
-                : "text-[13px] text-gray-300"
+                ? "text-[14px] text-[var(--text-primary)]"
+                : "text-[13px] text-[var(--text-secondary)]"
           }`}
         >
           {node.label}
@@ -428,7 +428,7 @@ function TreeDocNode({
       {/* Knowledge text + actions */}
       <div className="ml-5 mb-3">
         {node.knowledge_text && (
-          <p className="text-[12px] text-gray-400 leading-relaxed whitespace-pre-wrap bg-white/[0.02] border border-white/[0.04] rounded-lg px-3 py-2.5 mb-1.5">
+          <p className="text-[12px] text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap bg-[var(--bg-tertiary)]/50 border border-[var(--border-subtle)] rounded-lg px-3 py-2.5 mb-1.5">
             {node.knowledge_text}
           </p>
         )}
@@ -442,7 +442,7 @@ function TreeDocNode({
 
       {/* Children */}
       {node.children.length > 0 && (
-        <div className="border-l border-white/[0.06] pl-0">
+        <div className="border-l border-[var(--border-subtle)] pl-0">
           {node.children.map((child) => (
             <TreeDocNode
               key={child.id}
